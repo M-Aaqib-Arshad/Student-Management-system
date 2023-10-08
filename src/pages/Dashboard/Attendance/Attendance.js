@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import {  Button, Col, Divider, Form, Input, Modal, Row, Select, Space, Tooltip, message } from 'antd'
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
+import { Button, Col, Divider, Form, Input, Modal, Row, Select, Space, Tooltip, message } from 'antd'
+import { DeleteOutlined, EditOutlined, } from "@ant-design/icons"
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
-import { collection, deleteDoc, doc, getDocs, query, setDoc } from 'firebase/firestore'
+import { collection, deleteDoc, doc, getDocs, query, setDoc} from 'firebase/firestore'
 import { firestore } from 'config/firebase'
 
 export default function Courses() {
 
+
   const [allDocuments, setAllDocuments] = useState([])
   const [documents, setDocuments] = useState([])
-  const [status, SetStatus] = useState("active")
+  const [coursName, SetCoursName] = useState("courses")
   const [course, setCourse] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false)
   const navigate = useNavigate()
 
   const handleChange = e => setCourse(s => ({ ...s, [e.target.name]: e.target.value }))
-
+  const handleDate = (_, date) => setCourse(s => ({ ...s, date }))
 
   const getTodos = async () => {
     const q = query(collection(firestore, "courses"))
@@ -80,9 +81,10 @@ export default function Courses() {
     getTodos()
   }, [])
   useEffect(() => {
-    const filteredDocuments = allDocuments.filter(todo => todo.status === status)
+    const filteredDocuments = allDocuments.filter(todo => todo.courseName === coursName)
     setDocuments(filteredDocuments)
-  }, [allDocuments, status])
+  }, [allDocuments, coursName])
+  
 
   return (
     <>
@@ -91,9 +93,9 @@ export default function Courses() {
           <div className="row">
             <div className="col text-center">
               <h1>Courses</h1>
-              <Select placeholder="Select status" onChange={status => SetStatus(status)}>
-                {["active", "inactive"].map((status, i) => {
-                  return <Select.Option key={i} value={status}>{status}</Select.Option>
+              <Select placeholder="Select Course" onChange={courseName => SetCoursName(courseName)}>
+                {documents.map((object, i) => {
+                  return <Select.Option key={i} value={object.courseName}>{object.courseName}</Select.Option>
                 })}
               </Select>
             </div>
@@ -108,11 +110,10 @@ export default function Courses() {
                     <tr>
                       <th>#</th>
                       <th>Course id</th>
+                      <th>Student id</th>
                       <th>Course Name</th>
-                      <th>Course Code</th>
-                      <th>Course Description</th>
                       <th>Date Created</th>
-                      <th>Status</th>
+                      <th>Attendance</th>
                       <th>Action</th>
                     </tr>
                   </thead>

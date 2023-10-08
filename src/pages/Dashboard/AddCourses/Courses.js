@@ -1,29 +1,16 @@
-// import React from 'react'
 
-// function Courses() {
-//   return (
-//     <>
-//     courses
-//     </>
-//   )
-// }
-
-// export default Courses
 import React, { useState } from 'react'
-import { Button, Form, Input, Typography, DatePicker, Col, Row, message, Divider } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Typography,  Col, Row, message, Divider } from 'antd';
 import { useAuthContext } from 'contexts/AuthContext'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth, firestore } from 'config/firebase'
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
-import { Link } from 'react-router-dom'
+import {  firestore } from 'config/firebase'
+import { doc, setDoc } from 'firebase/firestore'
 
 const { Title } = Typography
 const initialState = {courseId: "", courseName: "", courseCode: "", description: ""}
 
 export default function Courses() {
 
-  const { dispatch,user } = useAuthContext()
+  const { user } = useAuthContext()
 //   console.log('user', user)
   const [state, setState] = useState(initialState)
   const [isProcessing, setIsProcessing] = useState(false)

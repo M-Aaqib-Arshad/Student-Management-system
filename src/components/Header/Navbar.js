@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { message } from 'antd'
 import { auth } from 'config/firebase'
 import { useAuthContext } from 'contexts/AuthContext'
-import { onAuthStateChanged, signOut } from 'firebase/auth'
+import {  signOut } from 'firebase/auth'
 import logo from  '../../assets/logo.png'
 
 export default function Navbar() {
@@ -38,6 +38,9 @@ export default function Navbar() {
               </li>
               <li className="nav-item">
                 <Link to="/contact" className="nav-link">Contact</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/apply" className="nav-link">Apply for Course</Link>
               </li>
             </ul>
             <div className="d-flex gap-3">
